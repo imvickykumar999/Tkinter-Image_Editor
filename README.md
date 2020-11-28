@@ -1,2 +1,3 @@
-# -Tkinter-Image-Editor
-Horizontal Eye Alignment
+# Tkinter-Image-Editor
+
+### Horizontal Eye Alignment
