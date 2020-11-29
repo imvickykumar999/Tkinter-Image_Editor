@@ -6,4 +6,5 @@
  
 ## >>> Simple Maths Concept used...
 
-![ankit](https://raw.githubusercontent.com/imvickykumar999/Tkinter-Image_Editor/main/Screenshot_20201129-085135_Instagram.jpg)
+[![ankit](https://raw.githubusercontent.com/imvickykumar999/Tkinter-Image_Editor/main/Screenshot_20201129-085135_Instagram.jpg)](
+https://github.com/imvickykumar999/Tkinter-Image_Editor/blob/0f42129cf54d080c26c769cca5fb4bb43f347b72/image%20editor/editor.py#L89)
