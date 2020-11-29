@@ -11,20 +11,28 @@ root = Tk()
 root.geometry("550x300+300+150")
 root.resizable(width=True, height=True)
 
-w = Label(root, text ='Choose Image to Rotate', font = "50")
+w = Label(root, text ='Choose Image to Rotate in Edit Menu', font = "50", bg = "red")
 w.pack()
+
+def open_img(rotated):
+    # rotated = openfn()
+    try:
+        img = Image.open(rotated)
+        if img.size[0] > 200 and img.size[1] > 300:
+            img = img.resize((int(img.size[0]/2),
+                int(img.size[1]/2)), Image.ANTIALIAS)
+
+        img = ImageTk.PhotoImage(img)
+        panel = Label(root, image=img)
+        panel.image = img
+        panel.pack()
+    except Exception as e:
+        # e = 'First Choose Image to rotate !!!'
+        mess(e)
 
 def openfn():
     filename = filedialog.askopenfilename(title='open')
     return filename
-
-torotate = openfn()
-x = torotate
-img = Image.open(x)
-img = ImageTk.PhotoImage(img)
-panel = Label(root, image=img)
-panel.image = img
-panel.pack()
 
 rotated = 'rotated.png'
 deg = 'Not yet Rotated'
@@ -36,7 +44,7 @@ filemenu = Menu(menu)
 menu.add_cascade(label = 'Edit', menu=filemenu)
 
 filemenu.add_command(label = 'Rotate',
-        command = lambda: rotatefun(torotate))
+        command = lambda: rotatefun(openfn()))
 filemenu.add_command(label = 'Open',
         command = lambda: osopen(rotated))
 
@@ -65,26 +73,21 @@ def rotatefun(torotate):
         img = img.rotate(deg)
 
         img.save(rotated)
+        txt = f'Rotated angle = {deg}'
+        mess(txt)
+
     except IOError:
         pass
 
 def osopen(rotated):
 #     rotated = openfn()
-    os.startfile(rotated)
+    try:
+        os.startfile(rotated)
+    except Exception as e:
+        mess(e)
 
-def open_img():
-#     x = openfn()
-    x = rotated
-    img = Image.open(x)
-    # img = img.resize((250, 250), Image.ANTIALIAS)
-    img = ImageTk.PhotoImage(img)
-    panel = Label(root, image=img)
-    panel.image = img
-    panel.pack()
-
-def mess(deg):
-    ourMessage = f'Rotated angle = {deg}'
-    messagebox.showinfo("showinfo", ourMessage)
+def mess(txt):
+    messagebox.showinfo("showinfo", txt)
 
 def angle(eyes):
     ley = eyes[0][1]
@@ -97,10 +100,9 @@ def angle(eyes):
 
     return (math.atan(h/b)*180)/math.pi
 
-Button(root, text = 'open rotated image',
-                    command = open_img).pack()
+Button(root, text = 'Open rotated image',
+                    command = lambda: open_img(rotated)).pack()
 root.mainloop()
-
 try:
     root.destroy()
 except:
