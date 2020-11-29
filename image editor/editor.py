@@ -102,7 +102,10 @@ def rotatefun(torotate):
         deg = angle(eyes)
     try:
         img = Image.open(torotate)
-        img = img.rotate(deg)
+        try:
+            img = img.rotate(deg)
+        except Exception as e:
+            mess(e)
 
         img.save(rotated)
         txt = f'Rotated angle = {deg}'
