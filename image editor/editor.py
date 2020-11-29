@@ -8,14 +8,10 @@ face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
 root = Tk()
-root.geometry("550x300+300+150")
+root.geometry("600x650+300+150")
 root.resizable(width=True, height=True)
 
-w = Label(root, text ='Choose Image to Rotate in Edit Menu', font = "50", bg = "red")
-w.pack()
-
 def open_img(rotated):
-    # rotated = openfn()
     try:
         img = Image.open(rotated)
         if img.size[0] > 200 and img.size[1] > 300:
@@ -26,15 +22,17 @@ def open_img(rotated):
         panel = Label(root, image=img)
         panel.image = img
         panel.pack()
+
     except Exception as e:
-        # e = 'First Choose Image to rotate !!!'
         mess(e)
 
 def openfn():
-    filename = filedialog.askopenfilename(title='open')
+    filename = filedialog.askopenfilename(title='Choose Image')
+    open_img(filename)
     return filename
 
 rotated = 'rotated.png'
+eyexml = 'eyexml.png'
 deg = 'Not yet Rotated'
 
 menu = Menu(root)
@@ -43,10 +41,8 @@ root.config(menu=menu)
 filemenu = Menu(menu)
 menu.add_cascade(label = 'Edit', menu=filemenu)
 
-filemenu.add_command(label = 'Rotate',
-        command = lambda: rotatefun(openfn()))
 filemenu.add_command(label = 'Open',
-        command = lambda: osopen(rotated))
+        command = lambda: osopen(eyexml))
 
 filemenu.add_separator()
 filemenu.add_command(label = 'Exit', command=root.quit)
@@ -62,9 +58,45 @@ def rotatefun(torotate):
 
     for (x,y,w,h) in faces:
         img = cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+
         roi_gray = gray[y:y+h, x:x+w]
         roi_color = img[y:y+h, x:x+w]
-        eyes = eye_cascade.detectMultiScale(roi_gray)
+
+        eyes = (eye_cascade.detectMultiScale(roi_gray)).tolist()
+        for (ex,ey,ew,eh) in eyes:
+            cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
+
+        cv2.imwrite(eyexml, img)
+        cv2.imshow('img',img)
+        cv2.waitKey(3000)
+        cv2.destroyAllWindows()
+
+        arr = []
+        for k in range(len(eyes)):
+            arr.append(eyes[k][1])
+
+        size = len(arr)
+        diff = max(arr) + 1
+
+        for i in range(size-1):
+            for j in range(i+1,size):
+                if abs(arr[i]-arr[j]) < diff:
+                    diff = abs(arr[i] - arr[j])
+
+        i,j = 0,1
+        newi = []
+        while i < size and j < size:
+            if i != j and abs(arr[j]-arr[i]) == diff:
+
+                newi.append(eyes[min([i,j])])
+                newi.append(eyes[max([i,j])])
+                eyes = newi
+                break
+
+            elif abs(arr[j]-arr[i]) < diff:
+                j+=1
+            else:
+                i+=1
 
         global deg
         deg = angle(eyes)
@@ -75,12 +107,12 @@ def rotatefun(torotate):
         img.save(rotated)
         txt = f'Rotated angle = {deg}'
         mess(txt)
+        open_img(rotated)
 
     except IOError:
         pass
 
 def osopen(rotated):
-#     rotated = openfn()
     try:
         os.startfile(rotated)
     except Exception as e:
@@ -100,8 +132,8 @@ def angle(eyes):
 
     return (math.atan(h/b)*180)/math.pi
 
-Button(root, text = 'Open rotated image',
-                    command = lambda: open_img(rotated)).pack()
+Button(root, text='Choose Image to Rotate',
+        command = lambda: rotatefun(openfn())).pack()
 root.mainloop()
 try:
     root.destroy()
