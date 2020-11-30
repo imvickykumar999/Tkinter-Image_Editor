@@ -4,7 +4,7 @@ from tkinter import messagebox
 from PIL import ImageTk, Image
 from tkinter import filedialog
 
-ex=1
+ex=True
 rotated = 'rotated.png'
 eyexml = 'eyexml.png'
 deg = 'Not yet Rotated'
@@ -12,14 +12,14 @@ deg = 'Not yet Rotated'
 while ex:
     def exitfun(root):
         global ex
-        ex = 0
+        ex = False
         return root.destroy()
 
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
     root = Tk()
-    pad=200
+    pad=100
     root.geometry("{0}x{1}+0+0".format(
             root.winfo_screenwidth()-pad, root.winfo_screenheight()-pad))
 
@@ -27,9 +27,9 @@ while ex:
         try:
             img = Image.open(rotated).convert('RGB')
 
-            if img.size[0] > 300 and img.size[1] > 400:
-                img = img.resize((int(img.size[0]/2),
-                    int(img.size[1]/2)), Image.ANTIALIAS)
+            if img.size[0] > 600 and img.size[1] > 600:
+                img = img.resize((int(img.size[0]/1.5),
+                    int(img.size[1]/1.5)), Image.ANTIALIAS)
 
             img = ImageTk.PhotoImage(img)
             panel = Label(root, image=img)
@@ -56,7 +56,7 @@ while ex:
 
     filemenu.add_separator()
     filemenu.add_command(label = 'Exit',
-            font='Helvetica 10 bold', command=root.quit)
+            font='Helvetica 10 bold', command=root.destroy)
 
     helpmenu = Menu(menu)
     menu.add_cascade(label = 'Help', menu=helpmenu)
@@ -156,7 +156,7 @@ while ex:
 
     Button(root, bg = "orange", font='Helvetica 12 bold',
             text='Clean frame',
-            command = root.quit).pack(side = "top")
+            command = root.destroy).pack(side = "top")
 
     Button(root, bg = "red", font='Helvetica 15 bold',
             text='!!! Click here, to Exit while loop !!!',
