@@ -19,15 +19,13 @@ while ex:
     eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
     root = Tk()
-    # root.geometry("600x450+300+150")
-    # root.resizable(width=True, height=True)
     pad=200
     root.geometry("{0}x{1}+0+0".format(
             root.winfo_screenwidth()-pad, root.winfo_screenheight()-pad))
 
     def open_img(rotated):
         try:
-            img = Image.open(rotated)
+            img = Image.open(rotated).convert('RGB')
 
             if img.size[0] > 300 and img.size[1] > 400:
                 img = img.resize((int(img.size[0]/2),
@@ -152,20 +150,20 @@ while ex:
         b = lex-rex
         return (math.atan(h/b)*180)/math.pi
 
-    Button(root, bg = "red", font='Helvetica 18 bold',
+    Button(root, bg = "yellow", font='Helvetica 18 bold',
             text='Choose Image to Rotate',
             command = lambda: rotatefun(openfn())).pack()
 
-    Button(root, bg = "Blue", font='Helvetica 12 bold',
+    Button(root, bg = "orange", font='Helvetica 12 bold',
             text='Clean frame',
             command = root.quit).pack(side = "top")
 
-    Button(root, bg = "yellow", font='Helvetica 15 bold',
+    Button(root, bg = "red", font='Helvetica 15 bold',
             text='!!! Click here, to Exit while loop !!!',
             command = lambda: exitfun(root)).pack(side = "bottom")
 
+    l = Label(root, text = "------------>\nROTATED Image")
+    l.config(font =("Courier", 30), anchor=CENTER)
+    l.pack(side = 'bottom')
+
     root.mainloop()
-    try:
-        root.destroy()
-    except:
-        pass
