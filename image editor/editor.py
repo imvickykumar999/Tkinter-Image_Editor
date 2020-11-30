@@ -5,11 +5,19 @@ from PIL import ImageTk, Image
 from tkinter import filedialog
 import webbrowser
 
-ex=True
-rotated = 'rotated.png'
-eyexml = 'eyexml.png'
+# path = r'C:\Users\Vicky\Pictures\python\image editor'
+path = ''
+rotated = os.path.join(path, 'rotated.png')
+eyexml = os.path.join(path, 'eyexml.png')
+cv = os.path.join(path, 'cv2.png')
+
+haarcascade_eye = os.path.join(path, 'haarcascade_eye.xml')
+haarcascade_frontalface_default = os.path.join(path,
+                    'haarcascade_frontalface_default.xml')
+
 deg = 'Not yet Rotated'
 url = "https://vixportfoliowithflask.herokuapp.com/skills"
+ex=True
 
 while ex:
     def exitfun(root):
@@ -35,9 +43,27 @@ while ex:
             mess(e)
 
     def openfn():
-        filename = filedialog.askopenfilename(title='Choose Image')
-        open_img(filename)
-        return filename
+        global cv
+        try:
+            url = 'http://192.168.43.1:8080/video'
+            video = cv2.VideoCapture(url)
+            while True:
+                check, frame = video.read()
+                cv2.imshow('Capturing', frame)
+                key = cv2.waitKey(1)
+                if key == ord(' '):
+                    break
+
+            video.release()
+            cv2.destroyAllWindows()
+            cv2.imwrite(cv, frame)
+
+        except Exception as e:
+            mess(e)
+            cv = filedialog.askopenfilename(title='Choose Image')
+
+        open_img(cv)
+        return cv
 
     def rotatefun(torotate):
         img = cv2.imread(torotate)
@@ -135,8 +161,8 @@ while ex:
             mess(e)
 
     root = Tk()
-    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-    eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+    face_cascade = cv2.CascadeClassifier(haarcascade_frontalface_default)
+    eye_cascade = cv2.CascadeClassifier(haarcascade_eye)
 
     pad=100
     root.geometry("{0}x{1}+0+0".format(
@@ -152,10 +178,10 @@ while ex:
             command = lambda: osopen(eyexml))
 
     filemenu.add_command(label = 'Open haarcascade_eye.xml',
-            command = lambda: osopen('haarcascade_eye.xml'))
+            command = lambda: osopen(haarcascade_eye))
 
     filemenu.add_command(label = 'Open haarcascade_frontalface_default.xml',
-            command = lambda: osopen('haarcascade_frontalface_default.xml'))
+            command = lambda: osopen(haarcascade_frontalface_default))
 
     filemenu.add_separator()
     filemenu.add_command(label = 'Exit',
