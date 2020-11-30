@@ -2,7 +2,7 @@
 
 ### >>> [Horizontal Eye Alignment](https://github.com/imvickykumar999/Tkinter-Image_Editor/blob/main/image%20editor/message.png)
 
-[![alingment](https://github.com/imvickykumar999/Tkinter-Image_Editor/blob/main/screenshot%20.png?raw=true)](https://github.com/imvickykumar999/Tkinter-Image_Editor/blob/main/image%20editor/editor.py)
+[![alingment](https://github.com/imvickykumar999/Tkinter-Image_Editor/blob/main/screenshot.png?raw=true)](https://github.com/imvickykumar999/Tkinter-Image_Editor/blob/main/image%20editor/editor.py)
  
 ## >>> [Simple Maths Concept used...](https://raw.githubusercontent.com/imvickykumar999/Tkinter-Image_Editor/main/eye_xml.png)
 
