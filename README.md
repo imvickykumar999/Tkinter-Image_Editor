@@ -6,4 +6,4 @@
  
 ## >>> [Simple Maths Concept used...](https://raw.githubusercontent.com/imvickykumar999/Tkinter-Image_Editor/main/eye_xml.png)
 
-[![ankit](https://raw.githubusercontent.com/imvickykumar999/Tkinter-Image_Editor/main/Screenshot_20201129-085135_Instagram.jpg)](https://github.com/imvickykumar999/Tkinter-Image_Editor/blob/f400cce55fcf622712941b32ec510c78784d7b76/image%20editor/editor.py#L143)
+[![ankit](https://raw.githubusercontent.com/imvickykumar999/Tkinter-Image_Editor/main/Screenshot_20201129-085135_Instagram.jpg)](https://github.com/imvickykumar999/Tkinter-Image_Editor/blob/b078cde48f06d7fa445a553f321da35326c869bc/image%20editor/editor.py#L120)
