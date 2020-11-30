@@ -22,8 +22,8 @@ while ex:
             img = Image.open(rotated).convert('RGB')
 
             if img.size[0] > 600 and img.size[1] > 600:
-                img = img.resize((int(img.size[0]/1.5),
-                    int(img.size[1]/1.5)), Image.ANTIALIAS)
+                img = img.resize((int(img.size[0]/2),
+                    int(img.size[1]/2)), Image.ANTIALIAS)
 
             img = ImageTk.PhotoImage(img)
             panel = Label(root, image=img)
@@ -111,6 +111,7 @@ while ex:
     def osopen(rotated):
         try:
             os.startfile(rotated)
+            mess('Opened in respected File Viewer')
         except Exception as e:
             mess(e)
 
@@ -128,13 +129,12 @@ while ex:
         return (math.atan(h/b)*180)/math.pi
 
     def callback(url):
-        webbrowser.open_new(url)
+        try:
+            webbrowser.open_new(url)
+        except Exception as e:
+            mess(e)
 
     root = Tk()
-    # link1 = Label(root, text="My Website", fg="blue")
-    # link1.pack()
-    # link1.bind("<Button-1>", lambda e: callback("http://www.google.com"))
-
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
@@ -148,8 +148,14 @@ while ex:
     filemenu = Menu(menu)
     menu.add_cascade(label = 'Edit', menu=filemenu)
 
-    filemenu.add_command(label = 'Open',
+    filemenu.add_command(label = 'Open eye_xml.png',
             command = lambda: osopen(eyexml))
+
+    filemenu.add_command(label = 'Open haarcascade_eye.xml',
+            command = lambda: osopen('haarcascade_eye.xml'))
+
+    filemenu.add_command(label = 'Open haarcascade_frontalface_default.xml',
+            command = lambda: osopen('haarcascade_frontalface_default.xml'))
 
     filemenu.add_separator()
     filemenu.add_command(label = 'Exit',
@@ -157,6 +163,7 @@ while ex:
 
     helpmenu = Menu(menu)
     menu.add_cascade(label = 'Help', menu=helpmenu)
+
     helpmenu.add_command(label = 'Message', command = lambda: mess(deg))
     helpmenu.add_command(label = 'My Website',
         command = lambda: callback(url))
