@@ -3,25 +3,19 @@ import cv2, math, os
 from tkinter import messagebox
 from PIL import ImageTk, Image
 from tkinter import filedialog
+import webbrowser
 
 ex=True
 rotated = 'rotated.png'
 eyexml = 'eyexml.png'
 deg = 'Not yet Rotated'
+url = "https://vixportfoliowithflask.herokuapp.com/skills"
 
 while ex:
     def exitfun(root):
         global ex
         ex = False
         return root.destroy()
-
-    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-    eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
-
-    root = Tk()
-    pad=100
-    root.geometry("{0}x{1}+0+0".format(
-            root.winfo_screenwidth()-pad, root.winfo_screenheight()-pad))
 
     def open_img(rotated):
         try:
@@ -44,23 +38,6 @@ while ex:
         filename = filedialog.askopenfilename(title='Choose Image')
         open_img(filename)
         return filename
-
-    menu = Menu(root)
-    root.config(menu=menu)
-
-    filemenu = Menu(menu)
-    menu.add_cascade(label = 'Edit', menu=filemenu)
-
-    filemenu.add_command(label = 'Open',
-            command = lambda: osopen(eyexml))
-
-    filemenu.add_separator()
-    filemenu.add_command(label = 'Exit',
-            font='Helvetica 10 bold', command=root.destroy)
-
-    helpmenu = Menu(menu)
-    menu.add_cascade(label = 'Help', menu=helpmenu)
-    helpmenu.add_command(label = 'Message', command = lambda: mess(deg))
 
     def rotatefun(torotate):
         img = cv2.imread(torotate)
@@ -149,6 +126,40 @@ while ex:
         rex = eyes[1][0]
         b = lex-rex
         return (math.atan(h/b)*180)/math.pi
+
+    def callback(url):
+        webbrowser.open_new(url)
+
+    root = Tk()
+    # link1 = Label(root, text="My Website", fg="blue")
+    # link1.pack()
+    # link1.bind("<Button-1>", lambda e: callback("http://www.google.com"))
+
+    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+
+    pad=100
+    root.geometry("{0}x{1}+0+0".format(
+            root.winfo_screenwidth()-pad, root.winfo_screenheight()-pad))
+
+    menu = Menu(root)
+    root.config(menu=menu)
+
+    filemenu = Menu(menu)
+    menu.add_cascade(label = 'Edit', menu=filemenu)
+
+    filemenu.add_command(label = 'Open',
+            command = lambda: osopen(eyexml))
+
+    filemenu.add_separator()
+    filemenu.add_command(label = 'Exit',
+            font='Helvetica 10 bold', command=root.destroy)
+
+    helpmenu = Menu(menu)
+    menu.add_cascade(label = 'Help', menu=helpmenu)
+    helpmenu.add_command(label = 'Message', command = lambda: mess(deg))
+    helpmenu.add_command(label = 'My Website',
+        command = lambda: callback(url))
 
     Button(root, bg = "yellow", font='Helvetica 18 bold',
             text='Choose Image to Rotate',
