@@ -1,5 +1,5 @@
 from tkinter import *
-import cv2, math, os
+import cv2, math, os, pyautogui
 from tkinter import messagebox
 from PIL import ImageTk, Image
 from tkinter import filedialog
@@ -24,6 +24,7 @@ if not (os.path.exists(web_haarcascade[0]) and os.path.exists(web_haarcascade[1]
 path = ''
 rotated = os.path.join(path, 'rotated.png')
 eyexml = os.path.join(path, 'eyexml.png')
+sspng = os.path.join(path, 'screenshot.png')
 cv = os.path.join(path, 'cv2.png')
 editor = os.path.join(path, 'editorexe.py')
 
@@ -37,6 +38,10 @@ ipwebcam = 'https://play.google.com/store/apps/details?id=com.pas.webcam&hl=en_I
 proj = 'https://github.com/imvickykumar999/Tkinter-Image_Editor/tree/master'
 ip_url = 'http://192.168.43.1:8080/video'
 ex=True
+
+def ss() :
+    myScreenshot = pyautogui.screenshot()
+    myScreenshot.save(sspng)
 
 def git_upload():
     from vixuploader import github as vix
@@ -201,7 +206,7 @@ while ex:
     face_cascade = cv2.CascadeClassifier(haarcascade_frontalface_default)
     eye_cascade = cv2.CascadeClassifier(haarcascade_eye)
 
-    pad=100
+    pad=120
     root.geometry("{0}x{1}+0+0".format(
             root.winfo_screenwidth()-pad, root.winfo_screenheight()-pad))
 
@@ -267,5 +272,6 @@ while ex:
             command = root.destroy).pack(side = "bottom")
 
     root.mainloop()
+    ss()
 
 git_upload()
