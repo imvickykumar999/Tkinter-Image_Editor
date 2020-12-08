@@ -541,7 +541,7 @@ while ex:
 
             text='Clean frame',
 
-            command = root.quit).pack(side = "bottom")
+            command = root.destroy).pack(side = "bottom")
 
 
 
