@@ -8,4 +8,3 @@
  
 ## >>> [Simple Maths Concept used...](https://raw.githubusercontent.com/imvickykumar999/Tkinter-Image_Editor/main/eye_xml.png)
 
-![ankit](https://raw.githubusercontent.com/imvickykumar999/Tkinter-Image_Editor/main/Screenshot_20201129-085135_Instagram.jpg)
