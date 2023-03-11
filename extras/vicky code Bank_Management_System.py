@@ -30,7 +30,7 @@ class Transaction:
 
 
     def creating_account():
-        global accounts
+        global accounts,name_entry,id_entry,mobileno_entry,acc_no_entry
 
         creating_account_window=Toplevel(root)
         creating_account_window.geometry('400x400')
@@ -62,11 +62,11 @@ class Transaction:
 
         submit=Button(creating_account_window,text="Submit",command=Transaction.insert_data)
         submit.grid(row=4,column=1,padx=10,pady=10)
-        acc_no=acc_no_entry.get()
+        # acc_no=acc_no_entry.get()
         
 
     def withdrawl():
-        global accounts
+        global accounts,acc_no_entry,amount_entry
 
         creating_withdrawl_window=Toplevel(root)
         creating_withdrawl_window.geometry('400x400')
@@ -91,7 +91,7 @@ class Transaction:
 
 
     def deposit():
-        global accounts
+        global accounts,acc_no_entry,amount_entry
 
         creating_deposited_window=Toplevel(root)
         creating_deposited_window.geometry('400x400')
@@ -116,7 +116,7 @@ class Transaction:
 
 
     def transfer():
-        global accounts
+        global accounts,sender_acc_entry,rece_acc_entry,money_entry
 
         creating_transfer_window=Toplevel(root)
         creating_transfer_window.geometry('400x400')
@@ -171,6 +171,7 @@ root.title("Banking Management System")
 root.geometry('400x400')
 name=Label(text="Customer Name")
 
+global user_name
 user_name=Entry(root)
 accounts['user_name'] = user_name.get()
 password=Label(text="Password")

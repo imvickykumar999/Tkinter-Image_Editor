@@ -19,8 +19,10 @@ class Transaction:
         submit=Button(self.master,text="Submit",command=self.main_page)
         submit.grid(row=2,column=4)
         self.master.mainloop() 
+
     def insert_data(self):
-        pass
+        global entry
+        string = entry.get()
         
     def main_page(self):
         self.master1=Toplevel(self.master)
