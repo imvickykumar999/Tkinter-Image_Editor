@@ -72,7 +72,11 @@ class library():
         """Delete books not in loan"""
         self.return_books_not_loan()
 
-    # def user_loans_date(self, user_name, start_year, )
+    def user_loans_date(self, user_name, start_year, start_month, start_day, end_yaer, end_month, end_day):
+        """filter loan between date"""
+        x1 = self.loan_book(self, user_name, 'book_title', start_year, start_month, start_day)
+        x2 = self.loan_book(self, user_name, 'book_title_1', end_yaer, end_month, end_day)
+        return x1-x2
 
 
 lib = library()
